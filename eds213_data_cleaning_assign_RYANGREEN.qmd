@@ -1,0 +1,158 @@
+---
+title: "eds213_data_cleaning_assign_RYANGREEN"
+format: html
+editor: visual
+editor_options: 
+  chunk_output_type: console
+---
+
+
+```{r}
+# Load Packages
+library(tidyverse)
+```
+
+```{r}
+# Load Data
+snowcover <- read_csv("data/processed/snow_cover.csv")
+```
+
+## Water_cover column cleaning
+
+First we will clean the Water_cover column. Let's first look for non-numeric values:
+
+```{r}
+snowcover %>%
+  count(Water_cover) %>%
+  filter(is.na(as.numeric(Water_cover)))
+```
+
+Aside from regular NA values, we have some '-', '.', 'n/a', 'unk'. Let's replace those with NA. 
+
+```{r}
+snowcover <- snowcover %>%
+  mutate(Water_cover = ifelse(Water_cover %in% c('-', '.', 'n/a', 'unk'), NA, Water_cover))
+
+# Confirming changes
+snowcover %>%
+  count(Water_cover) %>%
+  filter(is.na(as.numeric(Water_cover)))
+```
+
+Great, now all of those were changed to NA. 
+Now let's make the water_cover column numeric. 
+
+```{r}
+snowcover <- snowcover %>%
+  mutate(Water_cover = as.numeric(Water_cover))
+
+# Confirming change
+class(snowcover$Water_cover)
+```
+
+Now we'll check if all the values are between 0 and 100, because these are percentages. With this line, we'll isolate any values that are NOT between 0 and 100. 
+
+```{r}
+snowcover %>%
+  filter(Water_cover < 0 | Water_cover > 100)
+```
+
+Looks like a single row is outside our range. Let's remove it.
+
+```{r}
+snowcover <- snowcover %>%
+  filter(!(Water_cover < 0 | Water_cover > 100))
+
+# Confirming change
+snowcover %>%
+  filter(Water_cover < 0 | Water_cover > 100)
+```
+
+## Land_cover column cleaning
+Let's do all the same steps for the Land_cover column
+
+```{r}
+snowcover %>%
+  count(Land_cover) %>%
+  filter(is.na(as.numeric(Land_cover)))
+```
+
+Looks like only '.' values are present and need to be replaced. 
+
+```{r}
+snowcover <- snowcover %>%
+  mutate(Land_cover = ifelse(Land_cover %in% '.', NA, Water_cover))
+
+# Confirm change
+snowcover %>%
+  count(Land_cover) %>%
+  filter(is.na(as.numeric(Land_cover)))
+```
+
+Now let's make the column numeric.
+
+```{r}
+snowcover <- snowcover %>%
+  mutate(Land_cover = as.numeric(Land_cover))
+
+# Confirming change
+class(snowcover$Land_cover)
+```
+
+Now let's check for any values that can't be percentages.
+
+```{r}
+snowcover %>%
+  filter(Land_cover < 0 | Land_cover > 100)
+```
+
+All values are between 0 and 100!
+
+## Total_cover column cleaning
+
+Now that we've cleaned the Land_cover and Water_cover columns, we need to make sure that those values add up to 100 for the Total_cover column. And rows that do not add up to 100 will be dropped, as we don't know what the intended values are. 
+
+Let's check for any non-numeric values:
+
+```{r}
+snowcover %>%
+  count(Total_cover) %>%
+  filter(is.na(as.numeric(Total_cover)))
+```
+
+The values in the column are all numeric. Let's now convert the column to numeric class. 
+
+```{r}
+snowcover <- snowcover %>%
+  mutate(Total_cover = as.numeric(Total_cover))
+
+# Confirming change
+class(snowcover$Total_cover)
+```
+
+Now let's recalculate total cover, and remove any rows that do not add up to 100. 
+
+```{r}
+snowcover <- snowcover %>%
+  mutate(Total_cover = Snow_cover + Water_cover + Land_cover) %>%
+  filter(!Total_cover != 100)
+```
+
+## Save CSV File
+
+Now we'll write our fixed snowcover file to a csv!
+
+```{r}
+write_csv(snowcover, "data/processed/all_cover_fixed_RYANGREEN.csv")
+```
+
+
+
+
+
+
+
+
+
+
+
