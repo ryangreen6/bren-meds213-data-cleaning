@@ -24,9 +24,12 @@ File List:
 - bren-meds213-data-cleaning.rproj <- R Project for this data cleaning exercise
 - eds213_data_cleaning_assign_RYANGREEN.qmd <- Quarto Document for the data cleaning
 
-- Data
--   processed <- Cleaned and Processed Data
--   raw <- Original Data
+- Data Folder
+  
+processed <- Cleaned and Processed Data
+raw <- Original Data
+
+- Docs Folder <- Rendered Quarto Document Files
 
 
 
