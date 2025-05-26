@@ -26,9 +26,9 @@ File List:
 
 - Data Folder
   
-processed <- Cleaned and Processed Data
+  processed <- Cleaned and Processed Data
 
-raw <- Original Data
+  raw <- Original Data
 
 - Docs Folder <- Rendered Quarto Document Files
 
@@ -59,7 +59,6 @@ _______
 
 SHARING/ACCESS INFORMATION
 
-
-
+License : Creative Commons Attribution 4.0 International License
 
 
