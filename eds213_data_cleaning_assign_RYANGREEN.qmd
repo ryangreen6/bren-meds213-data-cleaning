@@ -147,6 +147,9 @@ write_csv(snowcover, "data/processed/all_cover_fixed_RYANGREEN.csv")
 ```
 
 
+```{r}
+snowcover
+```
 
 
 
