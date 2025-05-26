@@ -27,9 +27,39 @@ File List:
 - Data Folder
   
 processed <- Cleaned and Processed Data
+
 raw <- Original Data
 
 - Docs Folder <- Rendered Quarto Document Files
+
+_______
+
+DATA-SPECIFIC INFORMATION FOR:
+
+For the file  data/processed/all_cover_fixed_RYANGREEN.csv : 
+
+11 Variables, 4,269 Rows
+
+Variable List: 
+
+- Site <- Abbreviation for Site Name
+- Year <- Year the Observation was Collected
+- Date <- Date the Observation was Collected
+- Plot <- Plot the Observation was Collected
+- Location <- Location the Observation was Collected
+- Snow_cover <- Percent Snow Cover at Observation Location/Plot
+- Water_cover <- Percent Water Cover at Observation Location/Plot
+- Land_cover <- Percent Land Cover at Observation Location/Plot
+- Total_cover <- Total Cover
+- Observer <- Abbreviated Name of Observer
+- Notes
+
+Missing Data Code : NA
+_______
+
+SHARING/ACCESS INFORMATION
+
+
 
 
 
